@@ -1,0 +1,46 @@
+package Assign3;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class Product {
+
+	private int id;
+	private String pNum, pdescription;
+	static Random randomNumber = new Random();
+	private ArrayList<ProductObserver> observers;
+
+	public Product(String description, String n) {
+		pNum = n;
+		pdescription = description;
+
+		if (pNum == null || pNum.length() < 1 || pNum.length() > 20
+				|| !pNum.startsWith("A"))
+			throw new IllegalArgumentException(
+					"Product # cannot be blank, must begin with an \"A\", and must be less than 20 characters");
+		if (pdescription == null || pdescription.length() > 255)
+			throw new IllegalArgumentException("Product description too long");
+
+		observers = new ArrayList<ProductObserver>();
+	}
+
+	public Product() {
+		pNum = "";
+		pdescription = "";
+	}
+
+	public void registerObserver(ProductObserver o) {
+		observers.add(o);
+	}
+
+	private void updateObservers() {
+		for (ProductObserver o : observers) {
+			try {
+				o.updateObserver(this);
+			} catch (Exception e) {
+				// ignore
+			}
+		}
+	}
+
+}

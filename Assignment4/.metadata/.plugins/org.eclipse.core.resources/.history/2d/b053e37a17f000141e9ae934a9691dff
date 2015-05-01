@@ -1,0 +1,40 @@
+package Assign3;
+
+import javax.swing.JList;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.util.ArrayList;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class InventoryDetail extends JFrame {
+	private InventoryController invC;
+	private PartDetail PD;
+	private Part part;
+	private int nParts;
+	private int x;
+	private int y;
+
+	public InventoryDetail(Inventory inv, InventoryController invC) {
+
+		nParts = inv.getNumParts();
+		this.invC = invC;
+		for (int i = 0; i < nParts; i++) {
+			part = invC.getPartByIndex(i);
+			y = i * 10;
+			x = i * 25;
+
+			PartDetail PD = new PartDetail(part);
+			PD.setSize(400, 200);
+			PD.setLocation(600 + x, 200 + y);
+			PD.setVisible(true);
+
+		}
+
+	}
+
+}

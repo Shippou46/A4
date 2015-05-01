@@ -1,0 +1,7 @@
+package Assign3;
+
+public class ProductDetailObserver {
+	public void modelDeleted() {
+	}
+	public abstract void updateObserver(ProductPartDetail product);
+}
