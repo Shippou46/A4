@@ -1,0 +1,25 @@
+package Assign3;
+
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+
+public class ProductView extends JFrame implements ProductObserver {
+
+	private Product product;
+	private ProductController prodC;
+	private JMenu uMenu;
+	
+	
+	@Override
+	public void modelDeleted() {
+		this.setVisible(false);
+	}
+
+	@Override
+	public void updateObserver(Product product) {
+		if(product != null){		
+			;
+		}
+	}
+
+}

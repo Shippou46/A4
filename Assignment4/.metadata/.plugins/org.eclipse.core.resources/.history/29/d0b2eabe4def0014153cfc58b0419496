@@ -1,0 +1,19 @@
+package Assign3;
+
+public class ProductModel {
+
+	int id;
+	String pNum, pdescription;
+	
+	public ProductModel(String description, String n){
+		pNum = n;
+		pdescription = description;
+	}
+	
+	public ProductModel(){
+		pNum = "";
+		pdescription = "";
+	}
+	
+	
+} 

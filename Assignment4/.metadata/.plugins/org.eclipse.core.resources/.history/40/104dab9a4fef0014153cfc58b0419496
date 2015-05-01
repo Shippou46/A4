@@ -1,0 +1,6 @@
+package Assign3;
+
+public interface ProductObserver {
+	abstract public void updateObserver(ProductObserver Product);
+	abstract public void modelDeleted();
+}
