@@ -1,5 +1,6 @@
 package Assign3;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -10,6 +11,8 @@ public class Product {
 	static Random randomNumber = new Random();
 	private ArrayList<ProductObserver> observers;
 	private ArrayList<ProductPartDetail> pdetail;
+	private ArrayList<Part> parts;
+
 
 	public Product(String description, String n) {
 		pNum = n;
@@ -25,6 +28,30 @@ public class Product {
 		observers = new ArrayList<ProductObserver>();
 	}
 
+	public ArrayList<Part> getParts() {
+		return parts;
+	}
+	
+	public int getNumParts() {
+		return parts.size();
+	}
+	
+	public boolean partNameExists(String pName, Part part) {
+		for(Part p : parts) {
+			if(pName.equalsIgnoreCase(p.getPartName()) && (p != part || part == null))
+				return true;
+		}
+		return false;
+	}
+	
+	public boolean partNumberExists(int id, Part part){
+		for(Part p : parts){
+			if(id != p.getIDNumber())
+			return true;
+		}
+		return false;
+	}
+	
 	public Product() {
 		pNum = "";
 		pdescription = "";
@@ -65,6 +92,20 @@ public class Product {
 		pdetail.remove(p);
 	}
 	
+	public Part addProduct(Part part, String pNum, String pName, String v, int q, int id, String ex, String loc) throws IllegalArgumentException, SQLException {
+		if(partNameExists(pName, part))
+			throw new IllegalArgumentException("Part Name already exists!");
+		//if(partNumberExists(id, part))
+		//	throw new IllegalArgumentException("Part Number already exists!");
+		Part p = new Part(pNum, pName, v, q, id, ex, loc);
+		parts.add(p);
+		//db.addPart(p);
+		updateObservers();
+		//updateDB(p);
+		return p;
+	}
+	
+
 	public void registerObserver(ProductObserver o) {
 		observers.add(o);
 	}

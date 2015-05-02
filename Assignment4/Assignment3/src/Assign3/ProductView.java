@@ -20,13 +20,13 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class ProductView extends JFrame implements InventoryObserver {
+public class ProductView extends JFrame implements ProductObserver {
 
 	private JList<String> list;
 	private DefaultListModel<String> listModel;
 	private InventoryController invC;
 	public ArrayList<Product> products;
-	public Inventory inv;
+	public Product prod;
 
 	public ProductView(InventoryController invC, ArrayList<Product> p) {
 		this.invC = invC;
@@ -34,14 +34,14 @@ public class ProductView extends JFrame implements InventoryObserver {
 		this.setLayout(new BorderLayout());
 
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new GridLayout(4, 4));
+		buttonPanel.setLayout(new GridLayout(3, 3));
 
 		JButton button = new JButton("Add Product");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ProductPartView v = new ProductPartView(ProductView.this.invC,
 						null);
-				v.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+				v.setDefaultCloseOperation(EXIT_ON_CLOSE);
 				v.setSize(400, 200);
 				v.setLocation(500, 100);
 				v.setVisible(true);
@@ -70,7 +70,7 @@ public class ProductView extends JFrame implements InventoryObserver {
 		button.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				InventoryDetail InvD = new InventoryDetail(inv, ProductView.this.invC);
+				ProductDetailView PDV = new ProductDetailView(prod, ProductView.this.invC);
 			}
 		});
 		buttonPanel.add(button);
@@ -111,12 +111,12 @@ public class ProductView extends JFrame implements InventoryObserver {
 		});
 		this.add(new JScrollPane(list), BorderLayout.CENTER);
 
-		updateObserver(inv);
+		updateObserver(prod);
 
 	}
 
 	@Override
-	public void updateObserver(Inventory inv) {
+	public void updateObserver(Product product) {
 		// TODO Auto-generated method stub
 		
 	}
