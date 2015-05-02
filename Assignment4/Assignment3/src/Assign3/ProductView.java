@@ -6,14 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
-import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -22,6 +20,7 @@ import javax.swing.event.ListSelectionListener;
 
 public class ProductView extends JFrame implements ProductObserver {
 
+	private static final long serialVersionUID = 1L;
 	private JList<String> list;
 	private DefaultListModel<String> listModel;
 	private InventoryController invC;
@@ -70,7 +69,7 @@ public class ProductView extends JFrame implements ProductObserver {
 		button.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ProductDetailView PDV = new ProductDetailView(prod, ProductView.this.invC);
+				new ProductDetailView(prod, ProductView.this.invC);
 			}
 		});
 		buttonPanel.add(button);

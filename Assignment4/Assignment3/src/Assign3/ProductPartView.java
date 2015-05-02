@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class ProductPartView extends JFrame implements PartObserver {
+
+	private static final long serialVersionUID = 1L;
 	private JTextField tfPartNum;
 	private JTextField tfPartName;
 	private JTextField tfVendor;
@@ -88,7 +90,7 @@ public class ProductPartView extends JFrame implements PartObserver {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					int x = Integer.parseInt(tfQty.getText().trim());
+					Integer.parseInt(tfQty.getText().trim());
 				} catch(Exception err) {
 					ProductPartView.this.showError("Invalid Quantity!");
 					return;

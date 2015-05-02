@@ -42,8 +42,8 @@ public class Inventory {
 	}
 	
 	public boolean partNumberExists(int id, Part part){
-		for(Part p : parts){
-			if(id != p.getIDNumber())
+		for(@SuppressWarnings("unused") Part p : parts){
+			if(id != Part.getIDNumber())
 			return true;
 		}
 		return false;
@@ -79,5 +79,18 @@ public class Inventory {
 				//ignore for now
 			}
 		}
+	}
+
+	public Part addProduct(Part part, String pNum, String pName, String v, int q, int id, String ex, String loc) throws IllegalArgumentException, SQLException {
+		if(partNameExists(pName, part))
+			throw new IllegalArgumentException("Part Name already exists!");
+		//if(partNumberExists(id, part))
+		//	throw new IllegalArgumentException("Part Number already exists!");
+		Part p = new Part(pNum, pName, v, q, id, ex, loc);
+		parts.add(p);
+		//db.addPart(p);
+		updateObservers();
+		//updateDB(p);
+		return p;
 	}
 }

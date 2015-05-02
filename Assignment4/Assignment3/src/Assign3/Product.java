@@ -45,8 +45,8 @@ public class Product {
 	}
 	
 	public boolean partNumberExists(int id, Part part){
-		for(Part p : parts){
-			if(id != p.getIDNumber())
+		for(@SuppressWarnings("unused") Part p : parts){
+			if(id != Part.getIDNumber())
 			return true;
 		}
 		return false;

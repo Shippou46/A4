@@ -60,6 +60,31 @@ public class InventoryController {
 			Part.setQuantityUnit(command);
 		} 
 }
+
+	public Part addProduct(ProductPartView productPartView, Part p, String pNum, String pName, String v, int q, int id, String ex, String loc) {
+		//if p is null then create a new Part
+		//but first validate pName does not already exist
+		if(p == null) {
+			try {
+				return inv.addPart(p, pNum, pName, v, q, id, ex, loc);
+			} catch(IllegalArgumentException | SQLException e) {
+				productPartView.showError(e.getMessage());
+			}
+		} else {
+			try {
+				if(inv.partNameExists(pName, p)) {
+					productPartView.showError("Part Name already exists!");
+					return null;
+				}
+				p.setFields(pNum, pName, v, q);
+				inv.updateObservers();
+				return p;
+			} catch(IllegalArgumentException e) {
+				productPartView.showError(e.getMessage());
+			}
+		}
+		return null;
+	}
 	
 	
 }
