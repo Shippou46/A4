@@ -40,6 +40,7 @@ public class MyDB {
 				Part test = new Part(r.getString("pNum"), r.getString("pName"),
 						r.getString("v"), r.getInt("q"), r.getInt("id"),
 						r.getString("ex"), r.getString("loc"));
+				test.setVersion(r.getInt("version"));
 				list.add(test);
 			}
 		} catch (SQLException e) {
@@ -82,6 +83,7 @@ public class MyDB {
 				part = new Part(r.getString("pNum"), r.getString("pName"),
 						r.getString("v"), r.getInt("q"), r.getInt("id"),
 						r.getString("ex"), r.getString("loc"));
+				part.setVersion(r.getInt("version"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -111,7 +113,7 @@ public class MyDB {
 	public void addPart(Part part) {
 		Statement s;
 		ResultSet r;
-		String message = "INSERT into INVENTORY (pNum, pName, v, q, id, ex, loc)"
+		String message = "INSERT into INVENTORY (pNum, pName, v, q, id, ex, loc, version)"
 				+ "values ("
 				+ part.getPartNumber()
 				+ ", "
@@ -169,6 +171,8 @@ public class MyDB {
 				prod = new Product(r.getString("prodNum"),
 						r.getString("pDescription"));
 				prod.setIDNumber(id);
+				prod.setVersion(r.getInt("version"));
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -186,6 +190,8 @@ public class MyDB {
 			if (r.next()) {
 				prod = new ProductPartDetail(r.getInt("prodID"),
 						r.getInt("partID"), r.getInt("pQuantity"));
+				prod.setVersion(r.getInt("version"));
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -205,6 +211,7 @@ public class MyDB {
 				Product prod = new Product(r.getString("prodNum"),
 						r.getString("pDescription"));
 				prod.setIDNumber(r.getInt("id"));
+				prod.setVersion(r.getInt("version"));
 				list.add(prod);
 			}
 			// close that stuff in case it got opened.
@@ -228,6 +235,8 @@ public class MyDB {
 				ProductPartDetail prod = new ProductPartDetail(
 						r.getInt("prodID"), r.getInt("partID"),
 						r.getInt("pQuantity"));
+				prod.setVersion(r.getInt("version"));
+
 				list.add(prod);
 			}
 			// close that stuff in case it got opened.
@@ -244,7 +253,8 @@ public class MyDB {
 
 		String message = "UPDATE IGNORE Product set description = \""
 				+ prod.getDescription() + "\", productno = \""
-				+ prod.getProductNumber() + " where id = " + prod.getIDNumber();
+				+ prod.getProductNumber() + " where id = " + Product.getIDNumber()
+				+ ", version = " + prod.getVersion();
 		System.out.println(message);
 		try {
 			Statement s = connect.createStatement();
@@ -258,7 +268,8 @@ public class MyDB {
 
 		String message = "UPDATE IGNORE ProductParts set quantity = "
 				+ prod.getPDQty() + " where partid = " + prod.getPartID()
-				+ " and productid = " + prod.getProductID();
+				+ " and productid = " + prod.getProductID() + ", version = "
+				+ prod.getVersion();
 		System.out.println(message);
 		try {
 			Statement s = connect.createStatement();
@@ -272,7 +283,7 @@ public class MyDB {
 		int id = Product.getIDNumber();
 		String pNum = prod.getProductNumber();
 		String pDes = prod.getDescription();
-		String message = "INSERT into Product (prodNum, pDescription, id)"
+		String message = "INSERT into Product (prodNum, pDescription, id, version)"
 				+ "values (\"" + pNum + "\", \"" + pDes + "\", \"" + id + "\")";
 		try {
 			Statement s = connect.createStatement();
@@ -286,7 +297,7 @@ public class MyDB {
 	public void addProductPart(ProductPartDetail prod) {
 		String query = "INSERT into ProductParts (prodID, partID, pQuantity) "
 				+ "values (" + prod.getProductID() + "," + prod.getPartID()
-				+ ", " + prod.getPDQty();
+				+ ", " + prod.getPDQty() + ", version = 0" + +prod.getVersion();
 		try {
 			Statement s = connect.createStatement();
 			int x = s.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
@@ -297,8 +308,7 @@ public class MyDB {
 
 	public void deleteProductPart(ProductPartDetail prod) {
 		String message = "DELETE FROM ProductParts where partID = "
-				+ prod.getPartID() + " and prodID = "
-				+ prod.getProductID();
+				+ prod.getPartID() + " and prodID = " + prod.getProductID();
 		try {
 			Statement s = connect.createStatement();
 			s.executeUpdate(message);
@@ -309,7 +319,8 @@ public class MyDB {
 	}
 
 	public void deleteProduct(Product prod) {
-		String message = "delete from product where id = " + Product.getIDNumber();
+		String message = "delete from product where id = "
+				+ Product.getIDNumber();
 		try {
 			Statement s = connect.createStatement();
 			s.executeUpdate(message);
