@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -79,7 +80,7 @@ public class PartsListView extends JFrame implements InventoryObserver {
 		button.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				InventoryDetail InvD = new InventoryDetail(inv, PartsListView.this.invC);
+				new InventoryDetail(inv, PartsListView.this.invC);
 			}
 		});
 		buttonPanel.add(button);
@@ -88,7 +89,8 @@ public class PartsListView extends JFrame implements InventoryObserver {
 		button.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-			   ProductView pView = new ProductView(invC, inv);
+			   ArrayList<Product> product = null;
+			ProductView pView = new ProductView(invC, product);
 				pView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				pView.setSize(400, 300);
 				pView.setVisible(true);

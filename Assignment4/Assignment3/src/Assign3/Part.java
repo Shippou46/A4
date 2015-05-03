@@ -19,6 +19,7 @@ public class Part {
 	
 	
 	private ArrayList<PartObserver> observers;
+	private static int ver;
 	
 	public Part(String pNum, String pName, int q, int id, String ex, String loc) {
 		this(pNum, pName, "", q, id, ex, loc);
@@ -41,7 +42,7 @@ public class Part {
 		location = loc;
 		idNumber = 0;
 		exPartNum = ex;
-	
+		ver = 0;
 		
 		observers = new ArrayList<PartObserver>();
 	}
@@ -123,6 +124,18 @@ public class Part {
 		updateObservers();
 	}
 	
+	public static void VersionUpdate(){
+		ver++;
+	}
+	
+	public int getVersion(){
+		return ver;
+	}
+	
+	public void setVersion(int ver) {
+		Part.ver = ver;
+	}	
+	
 	public void registerObserver(PartObserver o) {
 		observers.add(o);
 	}
@@ -154,4 +167,6 @@ public class Part {
 			}
 		}
 	}
+
+
 }

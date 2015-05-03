@@ -10,6 +10,8 @@ import javax.swing.JTextField;
 
 public class PartDetailView extends JFrame {
 
+	private static final long serialVersionUID = 1L;
+
 	private Part part;
 
 	private JTextField Num;

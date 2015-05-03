@@ -8,6 +8,7 @@ public class ProductPartDetail {
 	private int partID;
 	private int pdQty;
 	private ArrayList<ProductPartDetailObserver> observers;
+	private int ver;
 
 	public ProductPartDetail(int productID, int partID, int pdQty) {
 		if (pdQty < 1)
@@ -17,6 +18,7 @@ public class ProductPartDetail {
 		this.productID = productID;
 		this.setPartID(partID);
 		this.setPDQty(pdQty);
+		ver = 0;
 	}
 
 	public int getProductID() {
@@ -44,6 +46,18 @@ public class ProductPartDetail {
 		this.pdQty = pdQty;
 	}
 
+	public void VersionUpdate(){
+		ver++;
+	}
+	
+	public int getVersion(){
+		return ver;
+	}
+	
+	public void setVersion(int ver) {
+		this.ver = ver;
+	}	
+	
 	private void updateObservers() {
 		for (ProductPartDetailObserver o : observers) {
 			try {
@@ -53,4 +67,6 @@ public class ProductPartDetail {
 			}
 		}
 	}
+
+
 }

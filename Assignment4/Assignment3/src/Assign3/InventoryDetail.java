@@ -1,19 +1,9 @@
 package Assign3;
 
-import javax.swing.JList;
-
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.util.ArrayList;
-
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 public class InventoryDetail extends JFrame {
-	private InventoryController invC;
-	private PartDetailView PD;
+	private static final long serialVersionUID = 1L;
 	private Part part;
 	private int nParts;
 	private int x;
@@ -22,7 +12,6 @@ public class InventoryDetail extends JFrame {
 	public InventoryDetail(Inventory inv, InventoryController invC) {
 
 		nParts = inv.getNumParts();
-		this.invC = invC;
 		for (int i = 0; i < nParts; i++) {
 			part = invC.getPartByIndex(i);
 			y = i * 10;
